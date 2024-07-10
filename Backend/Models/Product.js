@@ -16,15 +16,24 @@ const ReviewSchema = new Schema({
 const productSchema = new Schema({
   productName: {
     type: String,
+    required: true,
   },
-  productPrice: {
+  productMrp: {
     type: Number,
+    required: true,
+  },
+  discountPercent: {
+    type: Number,
+    required: true,
+    default: 0,
   },
   publishDate: {
-    type: String,
+    type: Date,
+    default: Date.now,
   },
   category: {
     type: String,
+    required: true,
   },
   productDescription: {
     type: String,
@@ -35,11 +44,18 @@ const productSchema = new Schema({
   status: {
     type: String,
   },
-  views:{
+  views: {
     type: Number,
     default: 0,
   },
-  reviews: [ReviewSchema], // Array of reviews
+  reviews: [ReviewSchema],
 });
 
-export default mongoose.model('Product', productSchema);
+productSchema.virtual('productPrice').get(function () {
+  return this.productMrp - (this.productMrp * (this.discountPercent / 100));
+});
+
+productSchema.set('toJSON', { virtuals: true });
+
+const Product = mongoose.model('Product', productSchema);
+export default Product;

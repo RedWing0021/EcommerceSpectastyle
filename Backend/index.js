@@ -20,10 +20,9 @@ const stripe = new Stripe(
   "sk_test_51O96wfSH8i1UqUchc81vmn8Mka2bbbMrCW2vZKLEvGRTZDqWx2KlxkbLzdQnAJ0ipNA1UtO9Y83vX4x7KXjz5E4Z00JxrbAflY"
 );
 
-
 //incresing limit to store image in database
-app.use(bodyParser.json({ limit: '10mb' })); 
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true })); 
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 app.use(cors());
 app.use(express.json());
@@ -75,13 +74,17 @@ app.post("/checkout", async (req, res) => {
 
 const port = process.env.PORT || 4000;
 const url = process.env.MONGO_URL;
+// const url = "mongodb://127.0.0.1:27017/test";
 
-mongoose
-  .connect(url, {
+mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => app.listen(port))
+  .then(() =>
+    app.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+    })
+  )
   .then(() => console.log(`connected to db at port ${port} :)`))
   .catch((err) => console.log(`${err} is error`));
 

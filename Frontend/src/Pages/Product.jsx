@@ -148,7 +148,9 @@ const Product = () => {
           <Loader />
         ) : (
           <div className="product-all-container">
-            {filterProducts().map((product) => (
+            {filterProducts().map((product) => {
+              const discount = ((product.productMrp - product.productPrice) / product.productMrp) * 100;
+              return(
               <div
                 className="product-card"
                 key={product._id}
@@ -160,10 +162,15 @@ const Product = () => {
                   className="product-image"
                 />
                 <h2 className="product-name">{product.productName}</h2>
-                <h5 className="product-price">Rs. {product.productPrice}</h5>
+                <div className="price">
+                <h5 className="product-price">Rs. {product.productPrice.toFixed(2)}</h5>
+                <h5 className="product-mrp">Rs. {product.productMrp}</h5>
+                <h5 className="product-offer">({product.discountPercent}% OFF)</h5>
+                </div>
                 <h4 className="product-status">{product.status}</h4>
               </div>
-            ))}
+            )}
+          )}
           </div>
         )}
       </div>

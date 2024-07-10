@@ -137,6 +137,22 @@
   color: #333;
   font-family: var(--font-rubik);
 }
+.product-mrp {
+  font-size: 1rem;
+  text-decoration: line-through;
+  color: #333;
+  margin-left: 25px;
+  margin-right: 10px;
+  
+}
+.price{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+.product-offer{
+  color: mediumvioletred;
+}
 
 .product-status {
   font-size: 1rem;
